@@ -1,0 +1,8 @@
+---
+    chain:
+        -
+            name: "getGroup"
+            ref: "servicenow.get_non_structured"
+            parameters:
+                table: "sys_user_group"
+                query: "name={{group_name}}"

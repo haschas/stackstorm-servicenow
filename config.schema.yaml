@@ -17,3 +17,26 @@
     description: "ServiceNow options that will be passed to all requests"
     type: object
     required: false
+
+  sensors:
+    type: object
+    properties:
+      taskinfo:
+        type: object
+        properties:
+          assignment_group:
+            descritpion: "Assignment Group in ServiceNow to monitor."
+            type: string
+            default: "6697f807db3c1b441d893a92ba961992"
+          state:
+            description: "What state REQs needs to be monitored."
+            type: integer
+            default: 0
+          short_description:
+            description: "Specific task to monitor"
+            type: string
+          table:
+            description: "ServiceNOW Table to monitor."
+            type: string
+            default: "sc_task"
+        

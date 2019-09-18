@@ -1,0 +1,38 @@
+---
+class_name: TaskInfoSensor
+entry_point: taskinfo_sensor.py
+description: Sensor which monitors SNOW tasks for specified group
+poll_interval: 30
+trigger_types:
+  - name: taskinfo
+    description: Trigger which indicates that a new task information in SNOW has arrived
+    payload_schema:
+      type: object
+      properties:
+        sys_id:
+          type: string
+        state:
+          type: integer
+        short_description:
+          type: string
+        description:
+          type: string
+        table:
+          type: string
+  - name: vm_migration
+    description: Trigger which indicates that a new task information in SNOW has arrived for vm migration
+    payload_schema:
+      type: object
+      properties:
+        sys_id:
+          type: string
+        state:
+          type: integer
+        short_description:
+          type: string
+        table:
+          type: string
+        vm_name:
+          type: string
+        cluster:
+          type: string

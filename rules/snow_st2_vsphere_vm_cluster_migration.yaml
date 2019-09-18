@@ -1,0 +1,27 @@
+---
+name: "snow_st2_vsphere_vm_cluster_migration"
+pack: "servicenow"
+description: "Rule for VM migration"
+enabled: True
+
+trigger:
+  type: "servicenow.vm_migration"
+  parameters: {}
+
+criteria:
+  trigger.short_description:
+    type: "equals"
+    pattern: "vm_migrate_cluster_ds"
+  trigger.state:
+    type: "equals"
+    pattern: 1
+
+action:
+  ref: "vsphere.update_snow_on_vm_cluster_ds_migration"
+  "parameters": {
+    "sysid": "{{ trigger.sys_id }}",
+    "vsphere": "prod",
+    "table": "{{ trigger.table }}",
+    "vm_name": "{{ trigger.vm_name }}",
+    "cluster": "{{ trigger.cluster }}"
+  }

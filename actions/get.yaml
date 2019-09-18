@@ -9,7 +9,20 @@ parameters:
     type: "string"
     description: "Table to take action on"
     required: true
+  resource:
+    type: string
+    description: Resource to query in
+    required: False
+    enum:
+      - Incident
+      - Task
+      - Request
+      - Change
   query:
     type: "object"
     description: "Structured query for SN data"
+    required: true
+  snow:
+    type: "string"
+    description: "ServiceNOW Instance name."
     required: true

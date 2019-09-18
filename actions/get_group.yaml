@@ -1,0 +1,12 @@
+---
+name: "get_group"
+runner_type: "action-chain"
+description: "Run a string GET query on the ServiceNow API"
+enabled: true
+entry_point: "workflows/get_group.yaml"
+parameters:
+  group_name:
+    type: "string"
+    description: "group name"
+    required: true
+

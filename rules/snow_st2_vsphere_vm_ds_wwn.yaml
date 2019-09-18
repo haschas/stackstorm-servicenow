@@ -1,0 +1,26 @@
+---
+name: "snow_st2_vsphere_vm_ds_wwn"
+pack: "servicenow"
+description: "Rule that retrieves data of Virtual Machine Datastore WWN and update SNOW ticket."
+enabled: True
+
+trigger:
+  type: "servicenow.taskinfo"
+  parameters: {}
+
+criteria:
+  trigger.short_description:
+    type: "equals"
+    pattern: "get_vm_storage_wwn"
+  trigger.state:
+    type: "equals"
+    pattern: 1
+
+action:
+  ref: "vsphere.update_snow_with_vm_datastore_wwn"
+  "parameters": {
+    "sysid": "{{ trigger.sys_id }}",
+    "vsphere": "prod",
+    "table": "{{ trigger.table }}",
+    "vm_names": "{{ trigger.description }}"
+  }

@@ -7,3 +7,4 @@ entry_point: "approve_change.py"
 parameters:
   number:
     type: "string"
+    description: "Change request number."

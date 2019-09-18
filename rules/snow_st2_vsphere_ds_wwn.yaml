@@ -1,0 +1,26 @@
+---
+name: "snow_st2_vsphere_ds_wwn"
+pack: "servicenow"
+description: "Rule descritpion"
+enabled: True
+
+trigger:
+  type: "servicenow.taskinfo"
+  parameters: {}
+
+criteria:
+  trigger.short_description:
+    type: "equals"
+    pattern: "get_storage_wwn"
+  trigger.state:
+    type: "equals"
+    pattern: 1
+
+action:
+  ref: "vsphere.update_snow_with_datastore_wwn"
+  "parameters": {
+    "sysid": "{{ trigger.sys_id }}",
+    "vsphere": "prod",
+    "table": "{{ trigger.table }}",
+    "storage_names": "{{ trigger.description }}"
+  }
