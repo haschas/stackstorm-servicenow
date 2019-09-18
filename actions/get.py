@@ -2,10 +2,8 @@ from lib.actions import BaseAction
 
 
 class GetAction(BaseAction):
-    def run(self, table, resource, query, snow):
-        #s = self.client
-
-        s = self._get_client(snow)
+    def run(self, table, resource, query):
+        s = self.client
         if table == "sc_task":
             r = s.resource(api_path='/table/sc_task')
         response = r.get(query=query)

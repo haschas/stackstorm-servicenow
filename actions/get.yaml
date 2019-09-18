@@ -22,7 +22,3 @@ parameters:
     type: "object"
     description: "Structured query for SN data"
     required: true
-  snow:
-    type: "string"
-    description: "ServiceNOW Instance name."
-    required: true
