@@ -99,12 +99,8 @@ class TaskInfoSensor(PollingSensor):
 
 
     def _dispatch_taskinfo(self, taskinfo):
-        # Splitting resources into a list
-        #r_list = str(taskinfo['description'].split(","))
-        #description = re.sub("<.*?>", "", taskinfo['description'])
         description = self._remove_tags(taskinfo['description'])
-        if taskinfo['short_description'] == 'vm_migrate_cluster_ds':
-            #print(taskinfo['short_description'])
+        if taskinfo['short_description'] in ['vm_migrate_cluster_ds', 'vm_migrate_cluster_ds_iso']:
             trigger = 'servicenow.vm_migration'
             d = json.loads(description)
             payload = {
@@ -118,11 +114,6 @@ class TaskInfoSensor(PollingSensor):
             self.sensor_service.dispatch(trigger=trigger, payload=payload)
         elif taskinfo['short_description'] in ['get_storage_wwn', 'get_vm_storage_wwn']:
             trigger = self._trigger_ref
-
-            #print('=================================================')
-            #print(taskinfo['short_description'])
-            #print(description)
-            #print('=================================================')
             r_list = description.split(",")
             resources = ast.literal_eval(json.dumps((r_list)))
 
@@ -133,7 +124,6 @@ class TaskInfoSensor(PollingSensor):
                 'description': str(resources),
                 'table': str(self.table)
             }
-            #print(payload)
             self.sensor_service.dispatch(trigger=trigger, payload=payload)
 
 
