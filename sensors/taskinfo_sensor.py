@@ -35,29 +35,19 @@ class TaskInfoSensor(PollingSensor):
 
         self.client = sn.Client(instance=instance_name, user=username, password=password)
 
-        self._last_id = None
-
         if 'custom_params' in self.config and isinstance(self.config['custom_params'], dict):
             self.client.parameters.add_custom(self.config['custom_params'])
 
 
     def poll(self):
-        last_id = self._get_last_id()
-
-        #if last_id:
-        #    tso.set_since_id(int(last_id))
         try:
             records = self._get_task_collector()
             self._logger.debug('Found a TaskInfo: %s' % records['short_description'])
         except Exception as e:
             self._logger.debug('Polling TaskInfo failed: %s' % (str(e)))
-        #if self._get_task_collector():
-        #    record = self._get_task_collector()
-        #    self._logger.debug('Found a TaskInfo: %s' % record['short_description'])
 
         # dispatches taskinfo trigger
         for record in records:
-            #if record['short_description'] in ['get_storage_wwn', 'get_vm_storage_wwn', 'vm_migrate_cluster_ds']:
             if record['description']:
                 self._dispatch_taskinfo(record)
 
@@ -77,20 +67,6 @@ class TaskInfoSensor(PollingSensor):
             return response.all()
         except Exception as e:
             self._logger.error(e)
-
-
-    def _get_last_id(self):
-        if not self._last_id and hasattr(self._sensor_service, 'get_value'):
-            self._last_id = self._sensor_service.get_value(name='last_id')
-
-        return self._last_id
-
-
-    def _set_last_id(self, last_id):
-        self._last_id = last_id
-
-        if hasattr(self._sensor_service, 'set_value'):
-            self._sensor_service.set_value(name='last_id', value=last_id)
 
 
     def _remove_tags(self, description):
